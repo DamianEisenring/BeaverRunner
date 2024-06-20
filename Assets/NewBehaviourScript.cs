@@ -26,8 +26,6 @@ public class PlayerMovement : MonoBehaviour
         // Check if the player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
-        // Debugging: Log if the player is grounded
-        Debug.Log("Is Grounded: " + isGrounded);
 
         // Handle jumping
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
