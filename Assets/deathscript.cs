@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class deathscript : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Überprüfen, ob das Objekt, das kollidiert, der Spieler ist (angenommen, der Spieler hat den Tag "Player")
+        // ÃœberprÃ¼fen, ob das Objekt, das kollidiert, der Spieler ist (angenommen, der Spieler hat den Tag "Player")
         if (other.CompareTag("Player"))
         {
-            // Spieler-Objekt zerstören
+            // Spieler-Objekt zerstÃ¶ren
             Destroy(other.gameObject);
 
             // Szene wechseln zur LevelSelector-Szene
