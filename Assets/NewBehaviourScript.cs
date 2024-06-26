@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    public float jumpForce = 10f;
     private Rigidbody2D rb;
     private bool isGrounded;
+    public Transform groundCheck;
+    public float checkRadius = 0.2f;
+    public LayerMask groundLayer;
 
     void Start()
     {
@@ -16,28 +19,29 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // Handle horizontal movement
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
+        // Check if the player is grounded
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+
+        // Debugging: Log if the player is grounded
+        Debug.Log("Is Grounded: " + isGrounded);
+
+        // Handle jumping
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnDrawGizmosSelected()
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGrounded = true;
-        }
-    }
+        if (groundCheck == null)
+            return;
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGrounded = false;
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
     }
 }
